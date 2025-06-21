@@ -1,4 +1,4 @@
-app-cripto-aes/
+simulato-cripto-aes/
 │
 ├── backend/             # Toda a lógica (criptografia, manipulação de dados)
 │   ├── __init__.py
