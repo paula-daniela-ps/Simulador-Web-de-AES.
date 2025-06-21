@@ -6,17 +6,17 @@ app-cripto-aes/
 │
 ├── frontend/
 │   ├── __init__.py
-│   └── simulato.py        <-- arquivo principal renomeado
+│   └── simulato.py        
 │
 ├── arquivos/
 ├── imagens/
 │
 ├── build/
 ├── dist/
-│   └── simulato.exe       <-- executável com novo nome
+│   └── simulato.exe     
 │
-├── iniciar_simulato.bat   <-- arquivo .bat atualizado
+├── iniciar_simulato.bat  
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
-└── simulato.spec          <-- gerado pelo pyinstaller
+└── simulato.spec         
