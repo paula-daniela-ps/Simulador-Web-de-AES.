@@ -1,16 +1,22 @@
-simulato-cripto-aes/
+app-cripto-aes/
 │
-├── backend/             # Toda a lógica (criptografia, manipulação de dados)
+├── backend/
 │   ├── __init__.py
-│   ├── crypto.py        # Funções AES, hash, etc.
-│   └── file_handler.py  # Upload, leitura e escrita de arquivos
+│   └── crypto.py
 │
-├── frontend/            # Interface Streamlit
+├── frontend/
 │   ├── __init__.py
-│   └── app.py           # Código Streamlit (interface)
+│   └── simulato.py        <-- arquivo principal renomeado
 │
-├── arquivos/            # Upload de arquivos
-├── imagens/             # Imagens usadas na interface
-├── requirements.txt     # Dependências
-├── README.md            # Descrição do projeto
-└── .gitignore
+├── arquivos/
+├── imagens/
+│
+├── build/
+├── dist/
+│   └── simulato.exe       <-- executável com novo nome
+│
+├── iniciar_simulato.bat   <-- arquivo .bat atualizado
+├── requirements.txt
+├── README.md
+├── .gitignore
+└── simulato.spec          <-- gerado pelo pyinstaller
