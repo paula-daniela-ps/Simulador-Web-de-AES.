@@ -1,0 +1,16 @@
+app-cripto-aes/
+│
+├── backend/             # Toda a lógica (criptografia, manipulação de dados)
+│   ├── __init__.py
+│   ├── crypto.py        # Funções AES, hash, etc.
+│   └── file_handler.py  # Upload, leitura e escrita de arquivos
+│
+├── frontend/            # Interface Streamlit
+│   ├── __init__.py
+│   └── app.py           # Código Streamlit (interface)
+│
+├── arquivos/            # Upload de arquivos
+├── imagens/             # Imagens usadas na interface
+├── requirements.txt     # Dependências
+├── README.md            # Descrição do projeto
+└── .gitignore
