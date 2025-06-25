@@ -1,16 +1,18 @@
 simulador-aes/
-├── app.py
+├── app.py                         # entrada do streamlit
 ├── criptografia/
-│   ├── aes_ecb.py
-│   ├── aes_cbc.py
-│   └── utils.py
+│   ├── aes_ecb.py                 # modo ECB
+│   ├── aes_cbc.py                 # modo CBC
+│   └── utils.py                   # padding, geração de chave etc.
 ├── pages/
 │   ├── Criptografar.py
 │   ├── Descriptografar.py
 │   └── CompararDesempenho.py
 ├── assets/
 │   ├── exemplo.txt
-│   └── logo.png
+│   ├── logo.png
+│   └── imagens_teoricas/          # Imagens didáticas (ex: blocos AES)
+├── data/                          # logs ou temporários
 ├── requirements.txt
 ├── README.md
 └── LICENSE
