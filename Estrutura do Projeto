@@ -1,22 +1,16 @@
-app-cripto-aes/
-│
-├── backend/
-│   ├── __init__.py
-│   └── crypto.py
-│
-├── frontend/
-│   ├── __init__.py
-│   └── simulato.py        
-│
-├── arquivos/
-├── imagens/
-│
-├── build/
-├── dist/
-│   └── simulato.exe     
-│
-├── iniciar_simulato.bat  
+simulador-aes/
+├── app.py
+├── criptografia/
+│   ├── aes_ecb.py
+│   ├── aes_cbc.py
+│   └── utils.py
+├── pages/
+│   ├── Criptografar.py
+│   ├── Descriptografar.py
+│   └── CompararDesempenho.py
+├── assets/
+│   ├── exemplo.txt
+│   └── logo.png
 ├── requirements.txt
 ├── README.md
-├── .gitignore
-└── simulato.spec         
+└── LICENSE
