@@ -16,5 +16,24 @@ O sistema está organizado em camadas funcionais com separação de responsabili
 
 ---
 
+---
 
+##  Tecnologias Utilizadas
 
+| Camada       | Tecnologias                  |
+|--------------|------------------------------|
+| Backend      | Python, PyCryptodome, bcrypt |
+| Frontend     | Streamlit                    |
+| Utilitários  | time, os, base64             |
+
+---
+
+##  Funcionalidades
+
+- 🔐 **Criptografar Textos ou Arquivos**
+- 🔓 **Descriptografar conteúdos com parâmetros personalizados**
+- ⚖️ **Comparar desempenho entre ECB x CBC, AES-128 x AES-256**
+- 📊 **Exibir tempo de execução e estrutura dos blocos criptografados**
+- 🧩 **Diferenciar criptografia (AES) de hash de senhas (bcrypt)**
+
+---
