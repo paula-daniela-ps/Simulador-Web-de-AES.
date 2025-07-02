@@ -7,8 +7,17 @@ from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 import bcrypt
 
+# === Função auxiliar para medir tempo ===
+def medir_tempo(func, *args, **kwargs):
+    inicio = time.perf_counter()
+    resultado = func(*args, **kwargs)
+    fim = time.perf_counter()
+    return resultado, (fim - inicio) * 1000  # tempo em milissegundos
+
+# === Configuração da página ===
 st.set_page_config(page_title="AES vs Bcrypt", layout="wide")
 
+# === Título e descrição ===
 st.title("Comparação: Criptografia AES × Hash de Senhas (bcrypt)")
 
 st.markdown("""
@@ -20,7 +29,7 @@ Este simulador demonstra a diferença prática entre:
 Preencha os campos abaixo e clique em **Executar Comparação**.
 """)
 
-# === Entrada do usuário ===
+# === Entrada do usuário com colunas lado a lado ===
 col1, col2 = st.columns(2)
 
 with col1:
@@ -29,41 +38,52 @@ with col1:
 with col2:
     senha = st.text_input("Senha para hash (bcrypt)", type="password", value="senha_segura")
 
-
-# === Função auxiliar para medir tempo ===
-def medir_tempo(func, *args, **kwargs):
-    inicio = time.perf_counter()
-    resultado = func(*args, **kwargs)
-    fim = time.perf_counter()
-    return resultado, (fim - inicio) * 1000
-
-
-# === Ação principal ===
+# === Execução da comparação ===
 if st.button("Executar Comparação"):
-    st.subheader("Criptografia com AES (Simétrica)")
-
-    # --- AES ---
-    chave = get_random_bytes(16)  # AES-128
-    cipher = AES.new(chave, AES.MODE_CBC)
-    iv = cipher.iv
     texto_bytes = texto.encode("utf-8")
+    chave = get_random_bytes(16)  # AES-128
 
-    criptografado, tempo_cripto = medir_tempo(cipher.encrypt, pad(texto_bytes, AES.block_size))
-    cipher2 = AES.new(chave, AES.MODE_CBC, iv)
-    descriptografado, tempo_decripto = medir_tempo(
-        lambda: unpad(cipher2.decrypt(criptografado), AES.block_size)
-    )
+    # --- AES modo ECB ---
+    st.subheader("Criptografia AES - Modo ECB (Electronic Codebook)")
 
-    st.markdown("**Texto criptografado (hexadecimal):**")
-    st.code(criptografado.hex(), language="text")
+    cipher_ecb = AES.new(chave, AES.MODE_ECB)
+    cript_ecb, tempo_ecb = medir_tempo(cipher_ecb.encrypt, pad(texto_bytes, AES.block_size))
+    cipher_ecb2 = AES.new(chave, AES.MODE_ECB)
+    decript_ecb = unpad(cipher_ecb2.decrypt(cript_ecb), AES.block_size)
 
-    st.markdown("**Texto descriptografado:**")
-    st.success(descriptografado.decode("utf-8"))
+    st.markdown("**Texto criptografado (ECB - hexadecimal):**")
+    st.code(cript_ecb.hex())
 
-    st.info(f"Tempo de Criptografia: {tempo_cripto:.2f} ms")
-    st.info(f"Tempo de Descriptografia: {tempo_decripto:.2f} ms")
+    st.markdown("**Texto descriptografado (ECB):**")
+    st.success(decript_ecb.decode("utf-8"))
+
+    st.info(f"Tempo ECB: {tempo_ecb:.2f} ms")
 
     st.divider()
+
+    # --- AES modo CBC ---
+    st.subheader("Criptografia AES - Modo CBC (Cipher Block Chaining)")
+
+    cipher_cbc = AES.new(chave, AES.MODE_CBC)
+    iv_cbc = cipher_cbc.iv
+    cript_cbc, tempo_cbc = medir_tempo(cipher_cbc.encrypt, pad(texto_bytes, AES.block_size))
+
+    cipher_cbc2 = AES.new(chave, AES.MODE_CBC, iv_cbc)
+    decript_cbc = unpad(cipher_cbc2.decrypt(cript_cbc), AES.block_size)
+
+    st.markdown("**Texto criptografado (CBC - hexadecimal):**")
+    st.code(cript_cbc.hex())
+
+    st.markdown(f"**IV usado (hexadecimal):** `{iv_cbc.hex()}`")
+
+    st.markdown("**Texto descriptografado (CBC):**")
+    st.success(decript_cbc.decode("utf-8"))
+
+    st.info(f"Tempo CBC: {tempo_cbc:.2f} ms")
+
+    st.divider()
+
+    # --- Hash com bcrypt ---
     st.subheader("Hash de Senha com Bcrypt")
 
     senha_bytes = senha.encode("utf-8")
@@ -74,60 +94,47 @@ if st.button("Executar Comparação"):
     incorreta = bcrypt.checkpw(b"senha_errada", hash_bcrypt)
 
     st.markdown("**Hash gerado:**")
-    st.code(hash_str, language="text")
+    st.code(hash_str)
+    st.caption("O hash exibido é apenas para fins demonstrativos. Em sistemas reais, nunca exiba hashes em tela.")
 
     col_hash1, col_hash2 = st.columns(2)
-    col_hash1.success(f"Senha correta verificada? {correta}")
-    col_hash2.error(f"Senha errada verificada? {incorreta}")
+    col_hash1.write(f"Senha correta verificada? {correta}")
+    col_hash2.write(f"Senha errada verificada? {incorreta}")
 
     st.info(f"Tempo de Geração de Hash (bcrypt): {tempo_hash:.2f} ms")
 
-    # === Gráfico comparativo ===
     st.divider()
+
+    # --- Gráfico comparativo de tempos ---
     st.subheader("Gráfico: Comparação de Tempo de Execução")
 
     df_tempo = pd.DataFrame({
-        "Operação": ["AES Criptografia", "AES Descriptografia", "bcrypt Hash"],
-        "Tempo (ms)": [tempo_cripto, tempo_decripto, tempo_hash]
+        "Operação": ["AES-ECB", "AES-CBC", "bcrypt Hash"],
+        "Tempo (ms)": [tempo_ecb, tempo_cbc, tempo_hash]
     })
 
-    grafico = alt.Chart(df_tempo).mark_bar(size=60).encode(
-        x=alt.X("Operação", sort=None),
-        y=alt.Y("Tempo (ms)", title="Tempo em milissegundos"),
+    grafico = alt.Chart(df_tempo).mark_bar().encode(
+        y=alt.Y("Operação", sort="-x"),
+        x=alt.X("Tempo (ms)", title="Tempo em milissegundos"),
         color=alt.Color("Operação", legend=None, scale=alt.Scale(scheme="set2")),
         tooltip=["Operação", "Tempo (ms)"]
     ).properties(
-        height=350,
+        height=200,
         width=600,
-        title="Tempo de Execução: AES vs bcrypt"
+        title="Tempo de Execução"
     )
 
     st.altair_chart(grafico, use_container_width=True)
 
-    # === Comparação Teórica ===
-    st.divider()
-    st.subheader("Diferenças entre AES e Bcrypt")
-
-    st.markdown("""
-<style>
-table {
-    width: 100%;
-    font-size: 16px;
-}
-th, td {
-    padding: 8px;
-    text-align: left;
-}
-</style>
-""", unsafe_allow_html=True)
-
-    st.markdown("""
-| Característica            | AES (Criptografia)       | Bcrypt (Hash de Senha)     |
-|--------------------------|--------------------------|-----------------------------|
-| Tipo                     | Simétrica (reversível)   | Hash (irreversível)         |
-| Recupera o original?     | Sim                      | Não                         |
-| Usado para               | Proteger dados/mensagens | Autenticação de senhas      |
-| Exige chave secreta?     | Sim                      | Não                         |
-| Segurança                | Alta (com chave segura)  | Muito alta (com salt + custo) |
-| Velocidade               | Muito rápida             | Intencionalmente mais lenta |
-""")
+    # Comentário de segurança
+    st.markdown(
+        """
+        Apesar do modo ECB apresentar tempos de execução ligeiramente menores, ele é considerado inseguro para proteger dados reais,<br>
+        pois revela padrões e não utiliza aleatoriedade, podendo expor informações sensíveis.<br><br>
+        O modo CBC, embora um pouco mais lento, oferece segurança significativamente maior ao usar um vetor de inicialização (IV)<br>
+        e encadear os blocos, evitando a exposição de padrões no texto cifrado.<br><br>
+        Já o bcrypt é projetado para hashing de senhas, com custo computacional ajustável para dificultar ataques de força bruta,<br>
+        sendo intencionalmente mais lento para aumentar a segurança.
+        """,
+        unsafe_allow_html=True
+    )
