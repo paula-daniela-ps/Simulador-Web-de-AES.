@@ -138,3 +138,15 @@ if st.button("Executar Comparação"):
         """,
         unsafe_allow_html=True
     )
+ # --- Diferenças entre AES e Bcrypt ---
+    st.subheader("Diferenças entre AES e Bcrypt")
+    st.markdown("""
+    | Característica         | AES (Criptografia)      | Bcrypt (Hash de Senha)           |
+    |-----------------------|------------------------|---------------------------------|
+    | Tipo                  | Simétrica (reversível) | Hash (irreversível)              |
+    | Recupera o original?  | Sim                    | Não                             |
+    | Usado para            | Proteger dados/mensagens| Autenticação de senhas          |
+    | Exige chave secreta?  | Sim                    | Não                             |
+    | Segurança             | Alta (com chave segura) | Muito alta (com salt + custo)   |
+    | Velocidade            | Muito rápida           | Intencionalmente mais lenta     |
+    """)
