@@ -1,3 +1,5 @@
 streamlit
 pycryptodome
 bcrypt
+pandas
+altair
