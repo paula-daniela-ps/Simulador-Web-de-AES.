@@ -10,6 +10,7 @@ caminho_imagem = "assets/logo.png"
 with open(caminho_imagem, "rb") as img_file:
     encoded = base64.b64encode(img_file.read()).decode()
 
+# HTML do banner com imagem de fundo e texto sobreposto
 html_banner = f"""
 <div style="
     background-image: url('data:image/png;base64,{encoded}');
@@ -18,7 +19,7 @@ html_banner = f"""
     width: 100%;
     height: 350px;
     display: flex;
-    center-direction: column;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
@@ -26,13 +27,13 @@ html_banner = f"""
     text-shadow: 2px 2px 6px black;
 ">
     <h1 style="font-size: 100px; margin: 0;">Simulador Web AES</h1>
-    <p style="font-size: 18px; font-weight: 300; margin-top: 10px;">
 </div>
 """
 
-# Exibe banner com texto sobre a imagem
+# Exibe banner
 st.markdown(html_banner, unsafe_allow_html=True)
 
+# Texto principal explicativo
 st.write("""
 
 ---
@@ -72,22 +73,16 @@ O simulador também exibe um **gráfico comparando os tempos de execução** ent
 Assim, você compreende melhor:
 - A **diferença entre proteger dados** e **verificar senhas**
 - A importância da escolha da técnica certa para cada situação
-""")
 
-st.write("""
-         
 ---
          
-O Simulador Web de AES é uma aplicação interativa desenvolvida em Python com Streamlit, com objetivo didático de auxiliar no ensino de segurança digital. Ele explora a criptografia simétrica utilizando o algoritmo AES (Advanced Encryption Standard), permitindo que os usuários:
+O **Simulador Web de AES** é uma aplicação interativa desenvolvida em **Python com Streamlit**, com objetivo didático de auxiliar no ensino de segurança digital. Ele explora a criptografia simétrica utilizando o algoritmo AES (Advanced Encryption Standard), permitindo que os usuários:
 
 - Realizem criptografia e descriptografia de textos e arquivos fictícios (.txt, .csv);
-- Compare os modos de operação ECB (Electronic Codebook) e CBC (Cipher Block Chaining), destacando as fragilidades do ECB;
-- Testem o desempenho criptográfico com diferentes tamanhos de entrada e chaves (AES-128 vs. AES-256);
-- Compreendam a diferença entre criptografia simétrica (AES) e funções de hash como o bcrypt, usadas para proteger senhas.
+- Compare os modos de operação **ECB (Electronic Codebook)** e **CBC (Cipher Block Chaining)**, destacando as fragilidades do ECB;
+- Testem o desempenho criptográfico com diferentes tamanhos de entrada e chaves (**AES-128 vs. AES-256**);
+- Compreendam a diferença entre **criptografia simétrica (AES)** e **funções de hash como o bcrypt**, usadas para proteger senhas.
 
 A aplicação é voltada para fins educacionais, promovendo a experimentação prática e o entendimento dos princípios de segurança da informação.
 
 """)
-
-
-#adicionar introção + contextualização de temas etc...
