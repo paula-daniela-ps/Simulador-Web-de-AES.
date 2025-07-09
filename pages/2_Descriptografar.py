@@ -4,7 +4,7 @@ from criptografia.aes_cbc import decrypt_cbc
 
 st.set_page_config(page_title="Descriptografar AES", layout="wide")
 
-st.markdown("### Modo de Uso - Descriptografar Texto com AES")
+st.markdown("# Modo de Uso - Descriptografar Texto com AES")
 st.write("""
 Esta página permite descriptografar **textos em hexadecimal** usando AES (ECB ou CBC).
 
