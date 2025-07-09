@@ -1,40 +1,41 @@
 import streamlit as st
+import base64
 
-import streamlit as st
+st.set_page_config(page_title="Introdução", layout="wide")
 
-import streamlit as st
+# Caminho da imagem
+caminho_imagem = "assets/logo.png"
 
-# Configura página
-st.set_page_config(page_title="Título com Imagem", layout="wide")
+# Lê a imagem e converte para base64
+with open(caminho_imagem, "rb") as img_file:
+    encoded = base64.b64encode(img_file.read()).decode()
 
-# Caminho ou URL da imagem de fundo
-imagem_fundo = "/mnt/data/a1aa4429-767d-4635-92c7-8fef3642d9c1.png"
-
-# Código HTML + CSS para o banner com texto sobre a imagem
 html_banner = f"""
 <div style="
-    position: relative;
-    text-align: center;
-    color: white;
-    font-family: 'Arial Black', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 72px;
-    background-image: url('{imagem_fundo}');
+    background-image: url('data:image/png;base64,{encoded}');
     background-size: cover;
     background-position: center;
-    height: 150px;
+    width: 100%;
+    height: 350px;
     display: flex;
+    center-direction: column;
     align-items: center;
-    justify-content: flex start;
-    ">
-    <span>Simulador Web AES</span>
+    justify-content: center;
+    color: white;
+    text-align: center;
+    text-shadow: 2px 2px 6px black;
+">
+    <h1 style="font-size: 100px; margin: 0;">Simulador Web AES</h1>
+    <p style="font-size: 18px; font-weight: 300; margin-top: 10px;">
 </div>
 """
 
+# Exibe banner com texto sobre a imagem
 st.markdown(html_banner, unsafe_allow_html=True)
 
 st.write("""
-Este simulador demonstra **dois conceitos fundamentais da segurança da informação**:
+
+---
 
 ### 1. Criptografia Simétrica com AES
 
@@ -62,7 +63,7 @@ No simulador, você verá:
 
 ---
 
-### Comparação prática
+### 3. Comparação prática
 
 O simulador também exibe um **gráfico comparando os tempos de execução** entre:
 - Criptografia AES (criptografar e descriptografar)
@@ -73,14 +74,16 @@ Assim, você compreende melhor:
 - A importância da escolha da técnica certa para cada situação
 """)
 
-
 st.write("""
+         
+---
+         
 O Simulador Web de AES é uma aplicação interativa desenvolvida em Python com Streamlit, com objetivo didático de auxiliar no ensino de segurança digital. Ele explora a criptografia simétrica utilizando o algoritmo AES (Advanced Encryption Standard), permitindo que os usuários:
 
 - Realizem criptografia e descriptografia de textos e arquivos fictícios (.txt, .csv);
 - Compare os modos de operação ECB (Electronic Codebook) e CBC (Cipher Block Chaining), destacando as fragilidades do ECB;
 - Testem o desempenho criptográfico com diferentes tamanhos de entrada e chaves (AES-128 vs. AES-256);
-- Compreendam a diferença entre criptografia simétrica (AES) e funções de hash como o `bcrypt`, usadas para proteger senhas.
+- Compreendam a diferença entre criptografia simétrica (AES) e funções de hash como o bcrypt, usadas para proteger senhas.
 
 A aplicação é voltada para fins educacionais, promovendo a experimentação prática e o entendimento dos princípios de segurança da informação.
 
@@ -88,4 +91,3 @@ A aplicação é voltada para fins educacionais, promovendo a experimentação p
 
 
 #adicionar introção + contextualização de temas etc...
-
