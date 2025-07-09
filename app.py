@@ -1,14 +1,21 @@
 import streamlit as st
-import base64
+import os
 
 st.set_page_config(page_title="Introdução", layout="wide")
 
-# Caminho da imagem
-caminho_imagem = "assets/Logo.png"
+# Verifica se a imagem existe na pasta assets
+if os.path.isfile("assets/Logo.png"):
+    st.image("assets/Logo.png", use_column_width=True)
+    st.success("Imagem carregada com sucesso!")
+else:
+    st.error("Arquivo assets/Logo.png não encontrado. Verifique o caminho e se o arquivo está no repositório.")
 
-# Lê a imagem e converte para base64
-with open(caminho_imagem, "rb") as img_file:
-    encoded = base64.b64encode(img_file.read()).decode()
+# Texto explicativo simples para teste
+st.write("""
+# Simulador Web AES
+
+Bem-vindo ao simulador!
+""")
 
 # HTML do banner com imagem de fundo e texto sobreposto
 html_banner = f"""
