@@ -129,24 +129,12 @@ if st.button("Executar Comparação"):
     # Comentário de segurança
     st.markdown(
         """
-        Apesar do modo ECB apresentar tempos de execução ligeiramente menores, ele é considerado inseguro para proteger dados reais,<br>
-        pois revela padrões e não utiliza aleatoriedade, podendo expor informações sensíveis.<br><br>
-        O modo CBC, embora um pouco mais lento, oferece segurança significativamente maior ao usar um vetor de inicialização (IV)<br>
-        e encadear os blocos, evitando a exposição de padrões no texto cifrado.<br><br>
-        Já o bcrypt é projetado para hashing de senhas, com custo computacional ajustável para dificultar ataques de força bruta,<br>
-        sendo intencionalmente mais lento para aumentar a segurança.
+- Apesar do **modo ECB** apresentar tempos de execução ligeiramente menores, ele é considerado inseguro para proteger dados reais,
+pois revela padrões e não utiliza aleatoriedade, podendo expor informações sensíveis.
+
+- O **modo CBC**, embora um pouco mais lento, oferece segurança significativamente maior ao usar um vetor de inicialização (IV) e encadear os blocos, evitando a exposição de padrões no texto cifrado.
+- Já o **bcrypt** é projetado para hashing de senhas, com custo computacional ajustável para dificultar ataques de força bruta,sendo intencionalmente mais lento para aumentar a segurança.
+        
         """,
         unsafe_allow_html=True
     )
- # --- Diferenças entre AES e Bcrypt ---
-    st.subheader("Diferenças entre AES e Bcrypt")
-    st.markdown("""
-    | Característica         | AES (Criptografia)      | Bcrypt (Hash de Senha)           |
-    |-----------------------|------------------------|---------------------------------|
-    | Tipo                  | Simétrica (reversível) | Hash (irreversível)              |
-    | Recupera o original?  | Sim                    | Não                             |
-    | Usado para            | Proteger dados/mensagens| Autenticação de senhas          |
-    | Exige chave secreta?  | Sim                    | Não                             |
-    | Segurança             | Alta (com chave segura) | Muito alta (com salt + custo)   |
-    | Velocidade            | Muito rápida           | Intencionalmente mais lenta     |
-    """)
