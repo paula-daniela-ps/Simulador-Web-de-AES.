@@ -8,7 +8,7 @@ from criptografia.aes_cbc import encrypt_cbc
 
 st.set_page_config(page_title="Criptografar AES", layout="wide")
 
-st.markdown("###  Modo de Uso - Criptografar Texto ou Arquivo")
+st.markdown("#  Modo de Uso - Criptografar Texto ou Arquivo")
 st.write("""
 Esta página permite criptografar **textos simples ou arquivos (.txt, .csv)** utilizando o algoritmo AES (Advanced Encryption Standard).
 
