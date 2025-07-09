@@ -11,7 +11,7 @@ st.set_page_config(page_title="Comparar Desempenho AES", layout="wide")
 st.title("Comparar Desempenho dos Modos AES (ECB vs CBC)")
 
 st.markdown("""
-   Modo de Uso - Comparar Desempenho dos Modos AES (ECB vs CBC)\n
+
    Esta página permite comparar o desempenho dos modos de operação AES (ECB e CBC) em termos de tempo de criptografia, além de eficiência com diferentes tamanhos de chave (AES-128 e AES-256). 
 1. Insira o texto para criptografia e selecione os modos de operação e tamanhos de chave que deseja testar.
 2. Selecione múltiplas combinações de parâmetros.
@@ -117,3 +117,11 @@ if st.button("Executar Comparação"):
 
         st.altair_chart(graf_cripto, use_container_width=True)
         st.altair_chart(graf_efic, use_container_width=True)
+        
+        st.markdown("""
+
+- **ECB (Electronic Codebook)**: Cada bloco de texto é criptografado de forma independente. Isso o torna mais rápido, porém **menos seguro**, pois blocos iguais geram resultados iguais — o que pode revelar padrões no conteúdo original.
+
+- **CBC (Cipher Block Chaining)**: Cada bloco de texto é combinado com o anterior antes de ser criptografado, utilizando um vetor de inicialização (IV). Isso o torna **mais seguro**, pois os blocos resultantes são diferentes, mesmo que o texto original tenha padrões repetidos. Em contrapartida, ele é **ligeiramente mais lento** devido ao encadeamento.
+
+""")
