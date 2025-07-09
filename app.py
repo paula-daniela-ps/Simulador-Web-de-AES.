@@ -4,7 +4,7 @@ import base64
 st.set_page_config(page_title="Introdução", layout="wide")
 
 # Caminho da imagem
-caminho_imagem = "assets/logo.png"
+caminho_imagem = "assets/Logo.png"
 
 # Lê a imagem e converte para base64
 with open(caminho_imagem, "rb") as img_file:
