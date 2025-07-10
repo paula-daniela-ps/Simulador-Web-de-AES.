@@ -3,6 +3,7 @@ import os
 import datetime
 import time
 import secrets
+import tempfile
 from criptografia.aes_ecb import encrypt_ecb
 from criptografia.aes_cbc import encrypt_cbc
 
@@ -20,17 +21,21 @@ Esta página permite criptografar **textos simples ou arquivos (.txt, .csv)** ut
 5. Clique em **Criptografar** e veja o resultado.
 """)
 
+# Diretórios temporários
+TEMP_RESULTADOS = os.path.join(tempfile.gettempdir(), "resultados_aes")
+TEMP_LOGS = os.path.join(tempfile.gettempdir(), "logs_aes")
+os.makedirs(TEMP_RESULTADOS, exist_ok=True)
+os.makedirs(TEMP_LOGS, exist_ok=True)
+
 def salvar_resultado(modo, conteudo_hex, tipo):
     agora = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    nome_arquivo = f"data/resultados/{tipo}_{modo}_{agora}.txt"
-    os.makedirs("data/resultados", exist_ok=True)
+    nome_arquivo = os.path.join(TEMP_RESULTADOS, f"{tipo}_{modo}_{agora}.txt")
     with open(nome_arquivo, "w") as f:
         f.write(conteudo_hex)
     return nome_arquivo
 
 def log_execucao(modo, tempo_ms, tipo):
-    log_path = "data/logs/log_execucao.csv"
-    os.makedirs("data/logs", exist_ok=True)
+    log_path = os.path.join(TEMP_LOGS, "log_execucao.csv")
     agora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     linha = f"{agora},{tipo},{modo},{tempo_ms:.2f}\n"
     if not os.path.exists(log_path):
@@ -55,7 +60,6 @@ def main():
     tipo = st.radio("Escolha o tipo de entrada:", ["Texto", "Arquivo"])
     modo = st.selectbox("Modo de operação AES", ["ECB", "CBC"])
 
-    # Chave persistente por sessão
     tamanho_chave_bits = st.selectbox("Tamanho da Chave AES", ["128 bits", "256 bits"])
     tamanho_chave = 16 if "128" in tamanho_chave_bits else 32
 
