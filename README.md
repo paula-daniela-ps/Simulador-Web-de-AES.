@@ -73,10 +73,10 @@ Instale as dependências:
 ```
 ```plaintext
 pip install -r requirements.txt
+```
 Rode a aplicação:
 
 ```
-```plaintext
 streamlit run app.py
 ```
 Acesse no navegador:
