@@ -3,7 +3,7 @@
 **Aplicação Web educacional** desenvolvida com foco em **criptografia simétrica (AES)**, modos de operação, desempenho e comparação com hash (bcrypt). A interface é baseada em **Streamlit** e projetada para fins didáticos sobre segurança digital.
 
 > Acesse online:  
-> https://simulador-web-aes-g9hwlwxq5zdbvcpudmntra.streamlit.app/
+> https://simulador-web-aes-6rwvorclnftvhzjffbxzmy.streamlit.app/
 
 ---
 
